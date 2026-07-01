@@ -1,0 +1,143 @@
+@import "tailwindcss";
+
+/* ============================================================================
+ * Intelisupreme design tokens (DESIGN.md)
+ * Tailwind v4 maps @theme entries to utility classes (bg-bg, text-text-primary...)
+ * ========================================================================== */
+
+@theme {
+  /* Brand */
+  --color-brand-blue: #299ebd;
+  --color-brand-green: #38a98e;
+  --color-brand-gradient-start: #299ebd;
+  --color-brand-gradient-end: #38a98e;
+
+  /* Surfaces & text (tokens resolved per-theme in :root / [data-theme]) */
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-border: var(--border);
+
+  /* Fonts (wired via next/font CSS vars in layout.tsx) */
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", Roboto, sans-serif;
+  --font-display: var(--font-outfit), var(--font-inter), ui-sans-serif,
+    system-ui, sans-serif;
+
+  /* Radii */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 24px;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-sm: 0 2px 4px rgba(15, 23, 42, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.08);
+  --shadow-lg-accent: 0 10px 20px -3px rgba(41, 158, 189, 0.15);
+
+  /* Breakpoints (aligned with DESIGN.md grid) */
+  --breakpoint-nav: 768px;
+  --breakpoint-wide: 1440px;
+
+  /* Easing */
+  --ease-out-soft: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ---- Light theme (default) ---- */
+:root,
+[data-theme="light"] {
+  --bg: #f8fafc;
+  --surface: #ffffff;
+  --text-primary: #0f172a;
+  --text-secondary: #64748b;
+  --border: #e2e8f0;
+  color-scheme: light;
+}
+
+/* ---- Dark theme ---- */
+[data-theme="dark"] {
+  --bg: #0b1120;
+  --surface: #1e293b;
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --border: #334155;
+  color-scheme: dark;
+}
+
+/* ---- Base ---- */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background-color: var(--color-brand-blue);
+  color: #ffffff;
+}
+
+/* Focus ring — brand + visible in both themes */
+:focus-visible {
+  outline: 2px solid var(--color-brand-blue);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* Headings use the display font */
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+}
+
+/* Native details marker rotation handled in component */
+details > summary {
+  list-style: none;
+  cursor: pointer;
+}
+details > summary::-webkit-details-marker {
+  display: none;
+}
+
+/* Brand gradient utility (used by primary CTAs) */
+.bg-brand-gradient {
+  background-image: linear-gradient(
+    135deg,
+    var(--color-brand-gradient-start) 0%,
+    var(--color-brand-gradient-end) 100%
+  );
+}
+
+.text-brand-gradient {
+  background-image: linear-gradient(
+    135deg,
+    var(--color-brand-gradient-start) 0%,
+    var(--color-brand-gradient-end) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Respect reduced motion: collapse transitions/animations */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
